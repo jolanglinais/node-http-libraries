@@ -1,0 +1,23 @@
+{
+  "name": "node-http-libraries",
+  "version": "1.0.0",
+  "description": "Analysis of Node HTTP Libraries",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "f"
+  },
+  "author": "Jerome Simeon & Jolene Langlinais",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "fetch": "^1.1.0",
+    "got": "^11.8.2",
+    "promisify": "^0.0.3",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
+  }
+}
