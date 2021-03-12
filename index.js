@@ -7,6 +7,7 @@ const requestPromise = require('request-promise');
 
 const sadUrl = 'https://svc-helper-api-wrong.clause.io/multipart-upload';
 const happyUrl = 'https://svc-helper-api.clause.io/';
+const grumpyUrl = 'https://svc-helper-api.clause.io/errors';
 
 const runRequest = async (url) => {
   console.log('---------------------------> START request');
@@ -40,6 +41,7 @@ const run = async () => {
   await runGot(happyUrl);
   // await runGot(sadUrl);
   // await runRequest(sadUrl);
+  // await runRequest(grumpyUrl);
 }
 
 run();
