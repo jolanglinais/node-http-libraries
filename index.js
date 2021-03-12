@@ -5,11 +5,13 @@ const request = require('request');
 const promisify = require('promisify');
 const requestPromise = require('request-promise');
 
-const wrongUrl = 'https://svc-helper-api-wrong.clause.io/multipart-upload';
+const sadUrl = 'https://svc-helper-api-wrong.clause.io/multipart-upload';
+const happyUrl = 'https://svc-helper-api.clause.io/';
 
-const tryRequest = async (url) => {
+const runRequest = async (url) => {
+  console.log('---------------------------> START request');
   try {
-    console.log('---------------------------> tryRequest');
+    // await doesn't make sense for request...
     await request(url, (error, response, body) => {
 	    console.log('REQUEST error:', error);
 	    console.log('REQUEST statusCode:', response?.statusCode);
@@ -19,22 +21,25 @@ const tryRequest = async (url) => {
   } catch (error) {
     console.log('REQUEST THROWS ', error);
   }
+  console.log('---------------------------> FINISH request');
 }
 
-const tryAxios = async (url) => {
+const runGot = async (url) => {
+  console.log('---------------------------> START got');
   try {
-    console.log('---------------------------> tryAxios');
-    const response = await axios.get(url)
-    console.log('AXIOS statusCode:', response?.statusCode);
-    console.log('AXIOS DONE');
+    const response = await got.get(url)
+    console.log('GOT statusCode:', response?.statusCode);
+    console.log('GOT DONE');
   } catch (error) {
-    console.log('AXIOS THROWS ', error);
+    console.log('GOT THROWS ', error);
   }
+  console.log('---------------------------> FINISH got');
 }
 
 const run = async () => {
-  await tryAxios(wrongUrl);
-  await tryRequest(wrongUrl);
+  await runGot(happyUrl);
+  // await runGot(sadUrl);
+  // await runRequest(sadUrl);
 }
 
 run();
