@@ -6,16 +6,20 @@ const promisify = require('promisify');
 const requestPromise = require('request-promise');
 
 const sadUrl = 'https://svc-helper-api-wrong.clause.io/multipart-upload';
-const grumpyUrl = `https://svc-helper-api.clause.io/errors/500`
-const happyUrl = 'https://svc-helper-api.clause.io/';
+const grumpyUrl = 'https://httpstat.us/500'
+const happyUrl = 'https://httpstat.us/200';
 
 const runRequest = (url) => {
   console.log('---------------------------> START request');
 
-  request(happyUrl, function (error, response, body) {
-    console.error('error:', error); // Print the error if one occurred
-    console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-    console.log('body:', body); // Print the HTML for the Google homepage.
+  request({
+    uri: url,
+    headers: { 'Accept': 'application/json' },
+  }, function (error, response, body) {
+    console.error('error:', error);
+    console.log('REQUEST statusCode:', response?.statusCode);
+    console.log('REQUEST statusMessage:', response?.statusMessage);
+    console.log('REQUEST body:', response?.body);
   });
   console.log('---------------------------> FINISH request');
 }
@@ -23,10 +27,15 @@ const runRequest = (url) => {
 const runGot = async (url) => {
   console.log('---------------------------> START got with url ', url);
   try {
-    const response = await got.get(url, { throwHttpErrors: false })
-    // console.log('GOT statusCode:', response?.statusCode);
-    // console.log('GOT body:', response?.body);
-    console.log('GOT response:', response);
+    const response = await got.get(url, {
+      headers: { 'Accept': 'application/json' },
+      throwHttpErrors: false
+     })
+    console.log('GOT statusCode:', response?.statusCode);
+    console.log('GOT statusMessage:', response?.statusMessage);
+    console.log('GOT body:', response?.body);
+    console.log('GOT error:', response?.error);
+    // console.log('GOT response:', response);
     console.log('GOT DONE');
   } catch (error) {
     console.log('GOT THROWS ', error);
@@ -34,11 +43,11 @@ const runGot = async (url) => {
   console.log('---------------------------> FINISH got with url ', url);
 }
 
-const runCallbackLibraries = () => {
+const runCallbackLibraries = async () => {
   // request
   // equivalent in got
 
-  // await runRequest(sadUrl);
+  await runRequest(grumpyUrl);
 };
 
 const runPromiseLibraries = async () => {
@@ -51,7 +60,7 @@ const runPromiseLibraries = async () => {
 
 const run = () => {
 
-  // runCallbackLibraries();
+  runCallbackLibraries();
   runPromiseLibraries();
 
 
